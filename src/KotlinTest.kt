@@ -14,4 +14,6 @@ fun main(args: Array<String>) {
 
     println("Prime numbers up to $limit are:")
     println(primes)
+    val hw: HelloWorld = HelloWorld()
+    hw.run()
 }
