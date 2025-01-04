@@ -16,4 +16,10 @@ fun main(args: Array<String>) {
     println(primes)
     val hw: HelloWorld = HelloWorld()
     hw.run()
+
+    val p1 = Person("John Doe", 30)
+    val p2 = Person("John Doe", 30)
+
+    val jc = JClass()
+    jc.print(p1, p2)
 }
