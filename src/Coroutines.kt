@@ -1,5 +1,5 @@
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.lang.management.ManagementFactory
 import java.lang.management.ThreadMXBean
 import java.util.*
@@ -8,6 +8,7 @@ import kotlin.math.ln
 
 var threadStarted = AtomicInteger(0)
 var threadFinished = AtomicInteger(0)
+var active = AtomicInteger(0)
 var k = 0
 
 val mx: ThreadMXBean = ManagementFactory.getThreadMXBean()
@@ -18,9 +19,10 @@ fun main(args: Array<String>) {
         val start = Date().time
         while (threadFinished.get() < 10) {
             System.out.printf(
-                "count = %d / %d%n",
+                "count = %d / %d active = %d %n",
                 threadStarted.get() - threadFinished.get(),
-                mx.getAllThreadIds().size
+                mx.getAllThreadIds().size,
+                active.get()
             )
             try {
                 Thread.sleep(250)
@@ -41,8 +43,9 @@ fun main(args: Array<String>) {
     println("Stop " + mx.allThreadIds.size)
 }
 
-fun start(k: Int) = GlobalScope.async {
+fun start(k: Int) = GlobalScope.launch {
     threadStarted.incrementAndGet()
+    active.incrementAndGet()
     val n = k
     var a = (n + 2).toDouble()
     for (i in 0..49) {
@@ -50,7 +53,9 @@ fun start(k: Int) = GlobalScope.async {
             for (j in 0..9999999) {
                 a += ln(a)
             }
+            active.decrementAndGet()
             Thread.sleep(8 + (12 * n.toLong()))
+            active.incrementAndGet()
         } catch (e: InterruptedException) {
             throw RuntimeException(e)
         }
