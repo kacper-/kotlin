@@ -1,11 +1,13 @@
 import kotlinx.coroutines.*
+import kotlinx.coroutines.future.await
 
 suspend fun  main(args: Array<String>) {
     println(Runtime.getRuntime().availableProcessors())
-    println("Start")
+    println("Start of processing")
     go0()
     test()
-    println("Stop2")
+    delay(800L)
+    println("End of processing")
 }
 
 suspend fun test() {
@@ -19,7 +21,7 @@ suspend fun go0() = coroutineScope {
             go1()
         }
 
-    println("Stop")
+    println("Join withTimeoutOrNull")
     println(t)
 }
 
@@ -28,13 +30,15 @@ suspend fun go1() {
     withContext(Dispatchers.Default) {
         go()
     }
-    println("Stop3")
+    println("Join withContext")
 }
 
 suspend fun go() = coroutineScope {
-    async {
+    launch {
+        println("CompletableFuture START")
         val jclass = JClass()
-        jclass.start()
+        val str = jclass.run().await()
+        println(str)
     }
 
     for(i in 1..10) {
@@ -49,7 +53,7 @@ suspend fun go() = coroutineScope {
 suspend fun gogo(i: Int) = coroutineScope {
     println("gogo ${Thread.currentThread().name}")
     launch {
-        delay(1000L)
+        delay(1300L)
         println("+$i")
     }
 

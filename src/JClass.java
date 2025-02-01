@@ -1,3 +1,5 @@
+import java.util.concurrent.CompletableFuture;
+
 public class JClass {
     void print(Object o1, Object o2) {
         System.out.println("equals java " + (o1 == o2));
@@ -15,5 +17,18 @@ public class JClass {
             }
             System.out.println("JAVA END");
         }).start();
+    }
+
+    public CompletableFuture<String> run() {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(2200);
+            } catch (InterruptedException e) {
+                System.out.println("FUTURE InterruptedException");
+            }
+            System.out.println("JAVA NATURAL END");
+            return "JAVA FUTURE END";
+        });
+        return future;
     }
 }
