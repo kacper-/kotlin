@@ -32,9 +32,12 @@ suspend fun go1() {
 }
 
 suspend fun go() = coroutineScope {
-    val jclass = JClass()
-    jclass.start()
-    for(i in 1..20) {
+    async {
+        val jclass = JClass()
+        jclass.start()
+    }
+
+    for(i in 1..10) {
         launch {
             gogo(i)
         }

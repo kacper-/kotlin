@@ -13,6 +13,7 @@ public class JClass {
                     System.out.println("JAVA InterruptedException");
                 }
             }
+            System.out.println("JAVA END");
         }).start();
     }
 }
