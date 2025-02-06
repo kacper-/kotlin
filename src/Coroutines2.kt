@@ -5,24 +5,29 @@ suspend fun  main(args: Array<String>) {
     println(Runtime.getRuntime().availableProcessors())
     println("Start of processing")
     go0()
-    test()
     delay(800L)
     println("End of processing")
 }
 
-suspend fun test() {
-
+suspend fun test() = coroutineScope {
+    launch {
+        delay(2500)
+        println("End of test")
+    }
 }
 
 suspend fun go0() = coroutineScope {
+
     println("go0 ${Thread.currentThread().name}")
 
     val t = withTimeoutOrNull(2000) {
-            go1()
+        launch {  go1() }
+        launch { test() }
         }
 
     println("Join withTimeoutOrNull")
     println(t)
+
 }
 
 suspend fun go1() {
