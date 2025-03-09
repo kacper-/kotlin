@@ -41,19 +41,22 @@ public class JClass {
     public static void start2() {
         long start = new Date().getTime();
         System.out.println(Runtime.getRuntime().availableProcessors());
-        Thread[] t = new Thread[6];
+        Thread[] t = new Thread[3];
         t[0] = Thread.ofPlatform().start(JClass::load);
         t[1] = Thread.ofPlatform().start(JClass::load);
         t[2] = Thread.ofPlatform().start(JClass::load);
-        t[3] = Thread.ofPlatform().start(JClass::load);
-        t[4] = Thread.ofPlatform().start(JClass::load);
-        t[5] = Thread.ofPlatform().start(JClass::load);
+//        t[3] = Thread.ofPlatform().start(JClass::load);
+//        t[4] = Thread.ofPlatform().start(JClass::load);
+//        t[5] = Thread.ofPlatform().start(JClass::load);
 //        t[6] = Thread.ofPlatform().start(JClass::load);
 //        t[7] = Thread.ofPlatform().start(JClass::load);
 //        t[8] = Thread.ofPlatform().start(JClass::load);
 //        t[9] = Thread.ofPlatform().start(JClass::load);
 //        t[10] = Thread.ofPlatform().start(JClass::load);
 //        t[11] = Thread.ofPlatform().start(JClass::load);
+//        t[12] = Thread.ofPlatform().start(JClass::load);
+//        t[13] = Thread.ofPlatform().start(JClass::load);
+//        t[14] = Thread.ofPlatform().start(JClass::load);
         try {
             for (Thread thread : t) thread.join();
         } catch (InterruptedException e) {
