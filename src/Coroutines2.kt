@@ -11,6 +11,7 @@ suspend fun  main(args: Array<String>) {
 
 suspend fun test() = coroutineScope {
     launch {
+        println("test - "+this.coroutineContext)
         delay(2500)
         println("End of test")
     }
@@ -32,7 +33,7 @@ suspend fun go0() = coroutineScope {
 
 suspend fun go1() {
     println("go1 ${Thread.currentThread().name}")
-    withContext(Dispatchers.Default) {
+    withContext(Dispatchers.IO) {
         go()
     }
     println("Join withContext")
@@ -52,11 +53,11 @@ suspend fun go() = coroutineScope {
         }
         println("started $i")
     }
-    println(this.coroutineContext)
+    println("go - "+this.coroutineContext)
 }
 
 suspend fun gogo(i: Int) = coroutineScope {
-    println("gogo ${Thread.currentThread().name}")
+    //println("gogo ${Thread.currentThread().name}")
     launch {
         delay(1300L)
         println("+$i")
@@ -66,5 +67,5 @@ suspend fun gogo(i: Int) = coroutineScope {
         delay(800L)
         println(i)
     }
-    println(this.coroutineContext)
+    println("gogo - "+this.coroutineContext)
 }
